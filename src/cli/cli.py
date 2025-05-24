@@ -10,7 +10,16 @@ import click
 from ..core.agent import FHIRAgent
 
 def format_result(result: Dict[str, Any], pretty: bool = False) -> str:
-    """Format the result for CLI output."""
+    """
+    Formats the result dictionary for CLI output, displaying errors in red or serializing as JSON.
+    
+    Args:
+        result: The result dictionary to format, expected to contain a "status" key.
+        pretty: If True, outputs indented (pretty-printed) JSON.
+    
+    Returns:
+        A string suitable for CLI display, with errors highlighted in red or successful results as JSON.
+    """
     if result.get("status") == "error":
         return click.style(f"Error: {result.get('message', 'Unknown error')}", fg="red")
 
@@ -19,7 +28,12 @@ def format_result(result: Dict[str, Any], pretty: bool = False) -> str:
     return json.dumps(result, default=str)
 
 def setup_cli() -> click.Group:
-    """Set up the command line interface."""
+    """
+    Initializes and configures the command-line interface for querying FHIR servers using natural language.
+    
+    Returns:
+        A Click command group with commands for interacting with the FHIR Agent.
+    """
     agent = FHIRAgent(
         fhir_base_url=os.getenv("FHIR_SERVER_URL", "http://hapi.fhir.org/baseR4"),
         model_name=os.getenv("OLLAMA_MODEL", "llama3.2"),
@@ -39,7 +53,15 @@ def setup_cli() -> click.Group:
     @click.argument("query")
     @click.option("--pretty", is_flag=True, help="Pretty print JSON output")
     def query(query: str, pretty: bool):
-        """Execute a natural language FHIR query"""
+        """
+        Executes a natural language query against the FHIR Agent and displays the result.
+        
+        Args:
+            query: The natural language query to be processed.
+            pretty: If True, formats the output as pretty-printed JSON.
+        
+        On error, prints the error message in red and exits with a non-zero status code.
+        """
         try:
             result = agent.process_query(query)
             click.echo(format_result(result, pretty))
