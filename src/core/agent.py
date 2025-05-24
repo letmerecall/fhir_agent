@@ -36,11 +36,12 @@ class FHIRQuery(BaseModel):
         None,
         description="Date or date range for filtering"
     )
-    result_count: int = Field(
+    count: int = Field(
         default=10,
         ge=1,
         le=100,
-        description="Maximum number of results to return (1-100)"
+        description="Maximum number of results to return (1-100)",
+        alias="_count"
     )
 
     class Config:
@@ -63,16 +64,14 @@ class FHIRQuery(BaseModel):
         Converts the FHIRQuery instance into a dictionary of FHIR API query parameters.
 
         Returns:
-            A dictionary mapping FHIR parameter names to their string values, suitable for use in FHIR API requests. The `result_count` field is mapped to `_count`, and `patient_id` is mapped to `patient`.
+            A dictionary mapping FHIR parameter names to their string values, suitable for use in FHIR API requests. The `patient_id` field is mapped to `patient`.
         """
         params = {}
         for field_name, field in self.__fields__.items():
             value = getattr(self, field_name)
             if value is not None and field_name != "resource_type":
                 param_name = field.alias if field.alias else field_name
-                if param_name == "result_count":
-                    params["_count"] = str(value)
-                elif param_name == "patient_id":
+                if param_name == "patient_id":
                     params["patient"] = str(value)
                 else:
                     params[param_name] = str(value)
@@ -122,7 +121,7 @@ class FHIRAgent:
             - resource_type: The FHIR resource type (e.g., 'Patient', 'Observation', 'Condition')
             - code: Any medical codes (LOINC, SNOMED) if mentioned
             - date: Date or date range if specified
-            - _count: Number of results to return (default: 10)
+            - count: Number of results to return (default: 10) (will be sent as _count in the API)
 
             Always return a valid JSON object with at least a patient_id and resource_type."""),
             ("human", "Query: {query}\n\nExtract the following parameters in JSON format:\n{format_instructions}")
