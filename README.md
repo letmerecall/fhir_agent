@@ -71,6 +71,14 @@ pip install -e ".[test]"
 pytest
 ```
 
+## Credits
+
+This project was developed with the assistance of:
+
+- [Windsurf](https://windsurf.com) - AI development platform
+- [Cursor](https://www.cursor.com) - AI-powered code editor
+- [Warp](https://www.warp.dev) - Modern terminal with AI capabilities
+
 ## License
 
 MIT
