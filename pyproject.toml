@@ -1,0 +1,59 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "fhir-agent"
+version = "0.1.0"
+description = "A CLI tool for querying FHIR servers using natural language"
+readme = "README.md"
+authors = [
+    { name = "Girish Sharma", email = "girish@example.com" }
+]
+license = "MIT"
+requires-python = ">=3.11"
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Healthcare Industry",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+dependencies = [
+    "langchain>=0.1.0,<1.0.0",
+    "langchain-ollama>=0.1.0",
+    "pydantic>=2.0.0,<3.0.0",
+    "python-dotenv>=1.0.0,<2.0.0",
+    "requests>=2.31.0,<3.0.0",
+    "click>=8.1.7,<9.0.0"
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",
+    "black>=23.0.0",
+    "isort>=5.0.0",
+    "mypy>=1.0.0",
+    "types-requests>=2.31.0",
+]
+
+
+[project.urls]
+Homepage = "https://github.com/yourusername/fhir-agent"
+Documentation = "https://github.com/yourusername/fhir-agent#readme"
+"Bug Tracker" = "https://github.com/yourusername/fhir-agent/issues"
+Changelog = "https://github.com/yourusername/fhir-agent/releases"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["*"]  # Include all packages in src/
+
+[tool.black]
+line-length = 88
+target-version = ["py311"]
+include = '\\.pyi?$'
+
+[tool.isort]
+profile = "black"
+line_length = 88
