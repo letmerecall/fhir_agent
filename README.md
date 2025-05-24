@@ -1,84 +1,81 @@
 # FHIR Agent
 
-Vibe coding a command-line tool for querying FHIR servers using natural language.
+Vibe coding a command-line tool for querying FHIR servers using natural language, powered by Ollama and LangChain.
 
 ## Features
 
 - Convert natural language queries into FHIR API calls
 - Supports common FHIR resources (Patient, Observation, Condition, etc.)
 - Uses Ollama for natural language understanding
-- Simple and easy-to-use CLI interface
+- Simple and easy-to-use CLI
+- Fast dependency management with `uv`
 
-## Installation
+## Prerequisites
 
-1. Clone the repository:
+- Python 3.11 or later
+- [Ollama](https://ollama.ai/) (for local LLM inference)
+- [uv](https://github.com/astral-sh/uv) (recommended for fast dependency management)
+
+## Quick Start
+
+1. **Clone the repository**:
+
    ```bash
-   git clone https://github.com/yourusername/fhir-agent.git
-   cd fhir-agent
+   git clone git@github.com:letmerecall/fhir_agent.git
+   cd fhir_agent
    ```
 
-2. Create and activate a virtual environment:
-   ```bash
-   python -m venv venv
-   source venv/bin/activate  # On Windows: venv\Scripts\activate
-   ```
+### Install dependencies using `uv` (Recommended)
 
-3. Install the package in development mode:
-   ```bash
-   pip install -e .
-   ```
+```bash
+# Install uv if you don't have it
+curl -sSf https://astral.sh/uv/install.sh | sh
+
+# Create and activate a virtual environment
+uv venv
+source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+
+# Install the package in development mode with all dependencies
+uv pip install -e ".[dev]"
+```
 
 ## Usage
 
-### Basic Usage
+Run the application using Python's module syntax:
 
 ```bash
 # Execute a natural language query
-fhir-agent query "Show me the latest lab results for patient 12345"
+python -m src query "Show me the latest lab results for patient 12345"
 
 # Pretty print the JSON output
-fhir-agent query "Find active conditions for patient 67890" --pretty
+python -m src query "Find active conditions for patient 67890" --pretty
+
+# Show help
+python -m src --help
 ```
 
-### Environment Variables
+### Configuration
 
-You can configure the agent using the following environment variables:
+Configure the agent using environment variables in a `.env` file or directly in your shell:
 
-- `FHIR_SERVER_URL`: Base URL of the FHIR server (default: `http://hapi.fhir.org/baseR4`)
-- `FHIR_AUTH_TOKEN`: Optional authentication token for the FHIR server
-- `OLLAMA_MODEL`: Name of the Ollama model to use (default: `llama3`)
+```env
+# Required
+OLLAMA_BASE_URL=http://localhost:11434  # URL of your Ollama server
 
-## Development
-
-### Dependencies
-
-- Python 3.11+
-- [Ollama](https://ollama.ai/) (for local LLM inference)
-
-### Installing Dependencies
-
-```bash
-pip install -r requirements.txt
+# Optional
+FHIR_SERVER_URL=http://hapi.fhir.org/baseR4  # Default FHIR server
+FHIR_AUTH_TOKEN=your-auth-token            # If authentication is required
+OLLAMA_MODEL=llama3                        # Default model to use
 ```
 
-### Running Tests
+## Contributing
 
-```bash
-# Install test dependencies
-pip install -e ".[test]"
-
-# Run tests
-pytest
-```
-
-## Credits
-
-This project was developed with the assistance of:
-
-- [Windsurf](https://windsurf.com) - AI development platform
-- [Cursor](https://www.cursor.com) - AI-powered code editor
-- [Warp](https://www.warp.dev) - Modern terminal with AI capabilities
+1. Fork the repository
+2. Create a feature branch
+3. Commit your changes
+4. Push to the branch
+5. Create a new Pull Request
 
 ## License
 
-MIT
+MIT © 2024 Girish Sharma
