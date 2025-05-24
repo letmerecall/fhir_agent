@@ -104,7 +104,7 @@ class FHIRAgent:
         # Initialize LLM with Ollama
         self.llm = OllamaLLM(
             model=model_name,
-            base_url=os.getenv("OLLAMA_BASE_URL", "http://localhost:8080"),
+            base_url=os.getenv("OLLAMA_BASE_URL", "http://localhost:11434"),
             temperature=0.1,
             timeout=timeout
         )
@@ -127,12 +127,6 @@ class FHIRAgent:
             Always return a valid JSON object with at least a patient_id and resource_type."""),
             ("human", "Query: {query}\n\nExtract the following parameters in JSON format:\n{format_instructions}")
         ])
-
-        # Create the chain with proper input variables
-        self.chain = ({
-            "query": lambda x: x["query"],
-            "format_instructions": lambda _: self.parser.get_format_instructions()
-        } | self.prompt | self.llm | self.parser)
 
     def process_query(self, query: str) -> Dict[str, Any]:
         """

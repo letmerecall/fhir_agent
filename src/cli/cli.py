@@ -37,11 +37,11 @@ def setup_cli() -> click.Group:
     agent = FHIRAgent(
         fhir_base_url=os.getenv("FHIR_SERVER_URL", "http://hapi.fhir.org/baseR4"),
         model_name=os.getenv("OLLAMA_MODEL", "llama3.2"),
-        headers={
-            "Authorization": f"Bearer {os.getenv('FHIR_AUTH_TOKEN', '')}"
+        headers=(
+            {"Authorization": f"Bearer {os.getenv('FHIR_AUTH_TOKEN')}"}
             if os.getenv("FHIR_AUTH_TOKEN")
-            else None
-        }
+            else {}
+        )
     )
 
     @click.group()
