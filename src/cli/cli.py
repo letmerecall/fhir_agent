@@ -3,7 +3,7 @@
 import json
 import os
 import sys
-from typing import Any, Dict, Optional
+from typing import Any, Dict
 
 import click
 
@@ -12,11 +12,11 @@ from ..core.agent import FHIRAgent
 def format_result(result: Dict[str, Any], pretty: bool = False) -> str:
     """
     Formats the result dictionary for CLI output, displaying errors in red or serializing as JSON.
-    
+
     Args:
         result: The result dictionary to format, expected to contain a "status" key.
         pretty: If True, outputs indented (pretty-printed) JSON.
-    
+
     Returns:
         A string suitable for CLI display, with errors highlighted in red or successful results as JSON.
     """
@@ -30,7 +30,7 @@ def format_result(result: Dict[str, Any], pretty: bool = False) -> str:
 def setup_cli() -> click.Group:
     """
     Initializes and configures the command-line interface for querying FHIR servers using natural language.
-    
+
     Returns:
         A Click command group with commands for interacting with the FHIR Agent.
     """
@@ -55,11 +55,11 @@ def setup_cli() -> click.Group:
     def query(query: str, pretty: bool):
         """
         Executes a natural language query against the FHIR Agent and displays the result.
-        
+
         Args:
             query: The natural language query to be processed.
             pretty: If True, formats the output as pretty-printed JSON.
-        
+
         On error, prints the error message in red and exits with a non-zero status code.
         """
         try:

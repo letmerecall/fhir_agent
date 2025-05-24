@@ -7,7 +7,7 @@ Vibe coding a command-line tool for querying FHIR servers using natural language
 - Convert natural language queries into FHIR API calls
 - Supports common FHIR resources (Patient, Observation, Condition, etc.)
 - Uses Ollama for natural language understanding
-- Simple and easy-to-use CLI interface
+- Simple and easy-to-use CLI
 - Fast dependency management with `uv`
 
 ## Prerequisites
