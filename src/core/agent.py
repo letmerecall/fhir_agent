@@ -52,7 +52,7 @@ class FHIRQuery(BaseModel):
         Returns a string representation of the FHIRQuery instance, listing all non-None fields and their values.
         """
         fields = []
-        for field_name, _ in self.__fields__.items():
+        for field_name, _ in self.model_fields.items():
             value = getattr(self, field_name)
             if value is not None:
                 fields.append(f"{field_name}={value!r}")
