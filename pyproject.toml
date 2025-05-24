@@ -3,12 +3,12 @@ requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "fhir-agent"
+name = "fhir_agent"
 version = "0.1.0"
 description = "A CLI tool for querying FHIR servers using natural language"
 readme = "README.md"
 authors = [
-    { name = "Girish Sharma", email = "girish@example.com" }
+    { name = "Girish Sharma", email = "girishsharma001@gmail.com" }
 ]
 license = "MIT"
 requires-python = ">=3.11"
@@ -40,10 +40,10 @@ dev = [
 
 
 [project.urls]
-Homepage = "https://github.com/yourusername/fhir-agent"
-Documentation = "https://github.com/yourusername/fhir-agent#readme"
-"Bug Tracker" = "https://github.com/yourusername/fhir-agent/issues"
-Changelog = "https://github.com/yourusername/fhir-agent/releases"
+Homepage = "https://github.com/letmerecall/fhir_agent"
+Documentation = "https://github.com/letmerecall/fhir_agent#readme"
+"Bug Tracker" = "https://github.com/letmerecall/fhir_agent/issues"
+Changelog = "https://github.com/letmerecall/fhir_agent/releases"
 
 [tool.setuptools.packages.find]
 where = ["src"]
