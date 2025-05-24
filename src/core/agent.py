@@ -40,7 +40,9 @@ class FHIRQuery(BaseModel):
         populate_by_name = True
 
     def __str__(self) -> str:
-        """Return a string representation of the query for debugging."""
+        """
+        Returns a string representation of the FHIRQuery instance, listing all non-None fields and their values.
+        """
         fields = []
         for field_name, field in self.__fields__.items():
             value = getattr(self, field_name)
@@ -49,7 +51,12 @@ class FHIRQuery(BaseModel):
         return f"FHIRQuery({', '.join(fields)})"
 
     def to_fhir_params(self) -> Dict[str, str]:
-        """Convert the query to FHIR API parameters."""
+        """
+        Converts the FHIRQuery instance into a dictionary of FHIR API query parameters.
+        
+        Returns:
+            A dictionary mapping FHIR parameter names to their string values, suitable for use in FHIR API requests. The `result_count` field is mapped to `_count`, and `patient_id` is mapped to `patient`.
+        """
         params = {}
         for field_name, field in self.__fields__.items():
             value = getattr(self, field_name)
@@ -73,13 +80,14 @@ class FHIRAgent:
         timeout: int = 30,
         headers: Optional[Dict[str, str]] = None
     ):
-        """Initialize the FHIR agent with a FHIR client and LLM chain.
-
+        """
+        Initializes the FHIRAgent with configuration for FHIR server access, language model, and prompt parsing.
+        
         Args:
-            fhir_base_url: Base URL of the FHIR server
-            model_name: Name of the Ollama model to use
-            timeout: Request timeout in seconds
-            headers: Optional headers for FHIR API requests
+            fhir_base_url: Base URL of the FHIR server to query.
+            model_name: Name of the Ollama language model used for parsing natural language queries.
+            timeout: Timeout in seconds for HTTP requests and LLM responses.
+            headers: Optional HTTP headers to include in FHIR API requests.
         """
         self.fhir_base_url = fhir_base_url.rstrip('/')
         self.timeout = timeout
@@ -119,13 +127,14 @@ class FHIRAgent:
         } | self.prompt | self.llm | self.parser)
 
     def process_query(self, query: str) -> Dict[str, Any]:
-        """Process a natural language query and return FHIR data.
-
+        """
+        Processes a natural language query and retrieves corresponding FHIR data.
+        
         Args:
-            query: Natural language query (e.g., "Show me patient 12345's latest labs")
-
+            query: A natural language string describing the desired FHIR data (e.g., "Show me patient 12345's latest labs").
+        
         Returns:
-            Dict containing the query results
+            A dictionary containing the status ("success" or "error"), the structured query parameters, the FHIR API response data, and the resource type. On error, includes an error message and the parsed query if available.
         """
         print("\n" + "="*80)
         print("FHIR AGENT - PROCESSING QUERY")
@@ -187,16 +196,19 @@ class FHIRAgent:
             }
 
     def _parse_query(self, query: str) -> FHIRQuery:
-        """Parse natural language query into a structured FHIR query.
-
+        """
+        Parses a natural language query string into a structured FHIRQuery object.
+        
+        Uses a language model and output parser to extract FHIR query parameters from free-text input. Raises a ValueError if parsing fails.
+        
         Args:
-            query: Natural language query string
-
+            query: The natural language query to be parsed.
+        
         Returns:
-            FHIRQuery: A structured query object
-
+            A FHIRQuery object representing the structured query.
+        
         Raises:
-            ValueError: If the query cannot be parsed
+            ValueError: If the query cannot be parsed into a valid FHIRQuery.
         """
         print(f"\n=== DEBUG: Parsing query ===")
         print(f"Input query: {query}")

@@ -4,7 +4,12 @@ import sys
 from .cli.cli import setup_cli
 
 def main():
-    """Run the CLI."""
+    """
+    Initializes and runs the FHIR Agent command-line interface.
+    
+    Returns:
+        The exit status code from the CLI execution.
+    """
     cli = setup_cli()
     cli()
 
