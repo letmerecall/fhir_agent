@@ -21,7 +21,7 @@ Vibe coding a command-line tool for querying FHIR servers using natural language
 1. **Clone the repository**:
 
    ```bash
-   git clone https://github.com/yourusername/fhir_agent.git
+   git clone git@github.com:letmerecall/fhir_agent.git
    cd fhir_agent
    ```
 
